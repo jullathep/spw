@@ -44,21 +44,20 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy((int)(Math.random()*390), 30);
+		Enemy e = new Enemy( 600, (int)(Math.random()*400));
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
 	
 	private void process(){
+		v.fall(1);
 		if(Math.random() < difficulty){
 			generateEnemy();
 		}
-		
 		Iterator<Enemy> e_iter = enemies.iterator();
 		while(e_iter.hasNext()){
 			Enemy e = e_iter.next();
 			e.proceed();
-			
 			if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
@@ -93,6 +92,9 @@ public class GameEngine implements KeyListener, GameReporter{
 			break;
 		case KeyEvent.VK_D:
 			difficulty += 0.1;
+			break;
+		case KeyEvent.VK_SPACE:
+			v.up(-1);
 			break;
 		}
 	}
