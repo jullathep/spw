@@ -4,15 +4,15 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Enemy extends Sprite{
+public class Item extends Sprite{
 	public static final int X_TO_FADE = 50;
 	public static final int X_TO_DIE = 0;
 	
 	private int step = 12;
 	private boolean alive = true;
 	
-	public Enemy(int x, int y) {
-		super(x, y, 10, 5);
+	public Item(int x, int y) {
+		super(x, y, 5, 5);
 		
 	}
 
@@ -24,7 +24,7 @@ public class Enemy extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(x - X_TO_DIE)/(X_TO_FADE - X_TO_DIE)));
 		}
-		g.setColor(Color.BLACK);
+		g.setColor(Color.YELLOW);
 		g.fillRect(x, y, width, height);
 		
 	}
@@ -38,5 +38,9 @@ public class Enemy extends Sprite{
 	
 	public boolean isAlive(){
 		return alive;
+	}
+	
+	public void getItem(){
+		alive = false;
 	}
 }
