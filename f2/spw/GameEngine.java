@@ -22,8 +22,10 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	private long score = 0;
 	private double difficulty = 0.1;
-	private double easy = 0.5;
-	
+	private double easy = 0.1;
+
+	private int dash = 0;
+	private long score_dash = 7000;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -48,6 +50,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	private void generateEnemy(){
 		Enemy e = new Enemy( 600, (int)(Math.random()*390));
+		if(dash == 1)
+			e.ItemDash();
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
@@ -63,11 +67,19 @@ public class GameEngine implements KeyListener, GameReporter{
 	private void process(){
 		v.fall(1);
 		
-		if(Math.random() < difficulty){
+		if(score > score_dash)
+			dash = 0;
+		
+		
+		if(dash == 1){
+			generateEnemy();
+		}
+		else if(Math.random() < difficulty){
 			generateEnemy();
 		}
 		
-		if(Math.random() > easy){
+		
+		if(Math.random() < easy){
 			generateItem();
 		}
 		
@@ -75,6 +87,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		Iterator<Enemy> e_iter = enemies.iterator();
 		
 		Iterator<Item> f_iter = items.iterator();
+		
 		while(e_iter.hasNext() || f_iter.hasNext()){
 			if(e_iter.hasNext()){
 				Enemy e = e_iter.next();
@@ -102,8 +115,13 @@ public class GameEngine implements KeyListener, GameReporter{
 		Rectangle2D.Double fr;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
+			if(dash == 1)
+				e.ItemDash();
+
+				
 			if(er.intersects(vr)){
-				die();
+				if(dash == 0)
+					die();
 				return;
 			}
 		}
@@ -112,6 +130,8 @@ public class GameEngine implements KeyListener, GameReporter{
 			fr = f.getRectangle();
 			if(fr.intersects(vr)){
 				f.getItem();
+				dash = 1;
+				endDash();
 				return;
 			}
 		}
@@ -121,6 +141,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		timer.stop();
 	}
 	
+	public void endDash(){
+		score_dash = score + score_dash;
+	}
+		   
+		   
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
@@ -129,7 +154,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		case KeyEvent.VK_RIGHT:
 			v.move(1);
 			break;
-		case KeyEvent.VK_D:
+		case KeyEvent.VK_A:
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:

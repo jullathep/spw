@@ -39,4 +39,16 @@ public class Enemy extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+	
+	public void clearEnemy(){
+		alive = false;
+	}
+	
+	public void noClearEnemy(){
+		alive = true;
+	}
+	
+	public void ItemDash(){
+		step = 50;
+	}
 }

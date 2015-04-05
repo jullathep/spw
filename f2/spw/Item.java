@@ -24,7 +24,7 @@ public class Item extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(x - X_TO_DIE)/(X_TO_FADE - X_TO_DIE)));
 		}
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.RED);
 		g.fillRect(x, y, width, height);
 		
 	}
