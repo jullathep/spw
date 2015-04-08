@@ -44,6 +44,10 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 	}
 	
+	public void chose(){
+		System.out.println("s");
+	}
+	
 	public void start(){
 		timer.start();
 	}
