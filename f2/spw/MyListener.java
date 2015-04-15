@@ -13,7 +13,7 @@ public class MyListener implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if(mode == 1){
-			JFrame frame2 = new JFrame("Space War");
+			JFrame frame2 = new JFrame("Singleplayer");
 			frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame2.setSize(700, 400);
 			frame2.getContentPane().setLayout(new BorderLayout());
@@ -27,7 +27,19 @@ public class MyListener implements ActionListener{
 			engine.start();
 		}
 		else if(mode == 2){
-			System.out.println("Multiplayer");
+			JFrame frame2 = new JFrame("Multiplayer");
+			frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame2.setSize(700, 400);
+			frame2.getContentPane().setLayout(new BorderLayout());
+
+			SpaceShip v = new SpaceShip(50, 180, 20, 20);
+			SpaceShip v2 = new SpaceShip(600, 180, 20, 20);
+			GamePanel gp = new GamePanel();
+			GameMulti multi = new GameMulti(gp, v, v2);
+			frame2.addKeyListener(multi);
+			frame2.getContentPane().add(gp, BorderLayout.CENTER);
+			frame2.setVisible(true);
+			multi.start();
 		}
 	    else if(mode == 3){
 			System.out.println("About");
