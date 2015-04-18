@@ -15,6 +15,7 @@ public class GameMulti implements KeyListener, GameReporter{
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private SpaceShip v;	
 	private SpaceShip v2;	
@@ -76,10 +77,10 @@ public class GameMulti implements KeyListener, GameReporter{
 		
 		
 		Iterator<Enemy> e_iter = enemies.iterator();
-		
+		Iterator<Bullet> b_iter = bullets.iterator();
 		Iterator<Item> f_iter = items.iterator();
 		
-		while(e_iter.hasNext() || f_iter.hasNext()){
+		while(e_iter.hasNext() || f_iter.hasNext() || b_iter.hasNext()){
 			if(e_iter.hasNext()){
 				Enemy e = e_iter.next();
 				e.proceed();
@@ -97,13 +98,23 @@ public class GameMulti implements KeyListener, GameReporter{
 					gp.sprites.remove(f);
 				}
 			}
+			if(b_iter.hasNext()){
+				Bullet b = b_iter.next();
+				b.homing(v2.y+8);
+				if(!b.isAlive()){
+					b_iter.remove();
+					gp.sprites.remove(b);
+				}
+			}
 		}
 		
 		gp.updateGameUI(this);
 		
 		Rectangle2D.Double vr = v.getRectangle();
+		Rectangle2D.Double vr2 = v2.getRectangle();
 		Rectangle2D.Double er;
 		Rectangle2D.Double fr;
+		Rectangle2D.Double br;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 				
@@ -116,10 +127,22 @@ public class GameMulti implements KeyListener, GameReporter{
 		for(Item f : items){
 			fr = f.getRectangle();
 			if(fr.intersects(vr)){
+				Bullet b = new Bullet( v.x+10, v.y+8);
+				gp.sprites.add(b);
+				bullets.add(b);
 				f.getItem();
 				return;
 			}
 		}
+		
+		for(Bullet b : bullets){
+			br = b.getRectangle();
+			if(br.intersects(vr2)){
+				die();
+				return;
+			}
+		}
+		
 	}
 	
 	public void die(){
