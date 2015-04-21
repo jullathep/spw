@@ -48,6 +48,8 @@ public class GameEngine implements KeyListener, GameReporter{
 		timer.start();
 	}
 	
+	
+	
 	private void generateEnemy(){
 		Enemy e = new Enemy( 600, (int)(Math.random()*390));
 		if(dash == 1)
@@ -120,8 +122,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 				
 			if(er.intersects(vr)){
-				if(dash == 0)
+				if(dash == 0){
 					die();
+					gp.dieOver(this);
+				}
 				return;
 			}
 		}
@@ -165,6 +169,18 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+	
+	public String getOver(){
+		return "Game Over";
+	}
+	
+	public String p1Winr(){
+		return "P1 Win";
+	}
+	
+	public String p2Winr(){
+		return "P2 Win";
 	}
 	
 	@Override

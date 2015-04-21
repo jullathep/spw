@@ -31,7 +31,28 @@ public class GamePanel extends JPanel {
 		
 		repaint();
 	}
-
+	
+	public void dieOver(GameReporter reporter){
+		big.setColor(Color.WHITE);
+		big.drawString(String.format("%s", reporter.getOver()), 300, 200);
+		for(Sprite s : sprites){
+			s.draw(big);
+		}
+		repaint();
+	}
+	
+	public void playerWin(GameReporter reporter, int index){
+		big.setColor(Color.WHITE);
+		if(index == 1)
+			big.drawString(String.format("%s", reporter.p1Winr()), 300, 200);
+		else if(index ==2)
+			big.drawString(String.format("%s", reporter.p2Winr()), 300, 200);
+		for(Sprite s : sprites){
+			s.draw(big);
+		}
+		repaint();
+	}
+	
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;

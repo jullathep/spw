@@ -48,6 +48,16 @@ public class GameMulti implements KeyListener, GameReporter{
 	public void start(){
 		timer.start();
 	}
+	public String getOver(){
+		return "Game Over";
+	}
+	public String p1Winr(){
+		return "P1 Win";
+	}
+	
+	public String p2Winr(){
+		return "P2 Win";
+	}
 	
 	private void generateEnemy(){
 		Enemy e = new Enemy( v2.x, v2.y+7);
@@ -119,6 +129,7 @@ public class GameMulti implements KeyListener, GameReporter{
 			er = e.getRectangle();
 				
 			if(er.intersects(vr)){
+				gp.playerWin(this, 2);
 				die();
 				return;
 			}
@@ -138,6 +149,7 @@ public class GameMulti implements KeyListener, GameReporter{
 		for(Bullet b : bullets){
 			br = b.getRectangle();
 			if(br.intersects(vr2)){
+				gp.playerWin(this, 1);
 				die();
 				return;
 			}
