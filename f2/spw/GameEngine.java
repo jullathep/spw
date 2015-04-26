@@ -18,6 +18,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private SpaceShip v;	
 	
+	private ImagePanel robotOne;
+	
 	private Timer timer;
 	
 	private long score = 0;
@@ -27,11 +29,14 @@ public class GameEngine implements KeyListener, GameReporter{
 	private int dash = 0;
 	private long score_dash = 7000;
 	
-	public GameEngine(GamePanel gp, SpaceShip v) {
+	public GameEngine(GamePanel gp, ImagePanel robotOne) {
 		this.gp = gp;
-		this.v = v;		
+		//this.v = v;		
 		
-		gp.sprites.add(v);
+		this.robotOne = robotOne;
+		
+		//gp.sprites.add(v);
+		gp.sprites.add(robotOne);
 		
 		timer = new Timer(50, new ActionListener() {
 			
@@ -67,7 +72,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	
 	private void process(){
-		v.fall(1);
+		robotOne.fall(1);
 		
 		if(score > score_dash)
 			dash = 0;
@@ -112,7 +117,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		gp.updateGameUI(this);
 		
-		Rectangle2D.Double vr = v.getRectangle();
+		Rectangle2D.Double vr = robotOne.getRectangle();
 		Rectangle2D.Double er;
 		Rectangle2D.Double fr;
 		for(Enemy e : enemies){
@@ -153,16 +158,16 @@ public class GameEngine implements KeyListener, GameReporter{
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			v.move(-1);
+			robotOne.move(-1);
 			break;
 		case KeyEvent.VK_RIGHT:
-			v.move(1);
+			robotOne.move(1);
 			break;
 		case KeyEvent.VK_A:
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:
-			v.up(-1);
+			robotOne.up(-1);
 			break;
 		}
 	}

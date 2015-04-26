@@ -17,8 +17,8 @@ public class GameMulti implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private ArrayList<Item> items = new ArrayList<Item>();
-	private SpaceShip v;	
-	private SpaceShip v2;	
+	private ImagePanel robotOne;	
+	private ImagePanel robotTwo;	
 	
 	private Timer timer;
 	
@@ -26,13 +26,13 @@ public class GameMulti implements KeyListener, GameReporter{
 	private double difficulty = 0.1;
 	private double easy = 0.1;
 	
-	public GameMulti(GamePanel gp, SpaceShip v, SpaceShip v2) {
+	public GameMulti(GamePanel gp, ImagePanel robotOne, ImagePanel robotTwo) {
 		this.gp = gp;
-		this.v = v;
-		this.v2 = v2;
+		this.robotOne = robotOne;
+		this.robotTwo = robotTwo;
 		
-		gp.sprites.add(v);
-		gp.sprites.add(v2);
+		gp.sprites.add(robotOne);
+		gp.sprites.add(robotTwo);
 		
 		timer = new Timer(50, new ActionListener() {
 			
@@ -60,7 +60,7 @@ public class GameMulti implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy( v2.x, v2.y+7);
+		Enemy e = new Enemy( robotTwo.x, robotTwo.y+7);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
@@ -74,8 +74,8 @@ public class GameMulti implements KeyListener, GameReporter{
 	
 	
 	private void process(){
-		v.fall(1);
-		v2.fall(1);
+		robotOne.fall(1);
+		robotTwo.fall(1);
 		/*if(Math.random() < difficulty){
 			generateEnemy();
 		}*/
@@ -110,7 +110,7 @@ public class GameMulti implements KeyListener, GameReporter{
 			}
 			if(b_iter.hasNext()){
 				Bullet b = b_iter.next();
-				b.homing(v2.y+8);
+				b.homing(robotTwo.y+8);
 				if(!b.isAlive()){
 					b_iter.remove();
 					gp.sprites.remove(b);
@@ -120,8 +120,8 @@ public class GameMulti implements KeyListener, GameReporter{
 		
 		gp.updateGameUI(this);
 		
-		Rectangle2D.Double vr = v.getRectangle();
-		Rectangle2D.Double vr2 = v2.getRectangle();
+		Rectangle2D.Double vr = robotOne.getRectangle();
+		Rectangle2D.Double vr2 = robotTwo.getRectangle();
 		Rectangle2D.Double er;
 		Rectangle2D.Double fr;
 		Rectangle2D.Double br;
@@ -138,7 +138,7 @@ public class GameMulti implements KeyListener, GameReporter{
 		for(Item f : items){
 			fr = f.getRectangle();
 			if(fr.intersects(vr)){
-				Bullet b = new Bullet( v.x+10, v.y+8);
+				Bullet b = new Bullet( robotOne.x+10, robotOne.y+8);
 				gp.sprites.add(b);
 				bullets.add(b);
 				f.getItem();
@@ -165,22 +165,22 @@ public class GameMulti implements KeyListener, GameReporter{
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_LEFT:
-			v.move(-1);
+			robotOne.move(-1);
 			break;
 		case KeyEvent.VK_RIGHT:
-			v.move(1);
+			robotOne.move(1);
 			break;
 		case KeyEvent.VK_A:
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:
-			v.up(-1);
+			robotOne.up(-1);
 			break;
 		case KeyEvent.VK_ENTER:
 			generateEnemy();
 			break;
 		case KeyEvent.VK_P:
-			v2.up(-1);
+			robotTwo.up(-1);
 			break;
 		}
 	}
