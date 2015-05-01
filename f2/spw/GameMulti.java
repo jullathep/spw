@@ -60,7 +60,7 @@ public class GameMulti implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy( robotTwo.x, robotTwo.y+7);
+		Enemy e = new Enemy( robotTwo.x, robotTwo.y+8);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}

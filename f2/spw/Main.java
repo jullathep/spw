@@ -25,15 +25,10 @@ public class Main {
 		MyListener ml2 = new MyListener(2);
 		button2.addActionListener(ml2);
 		
-		JButton button3 = new JButton(" >> About <<");
-		MyListener ml3 = new MyListener(3);
-		button3.addActionListener(ml3);
 		
-		
- 		frame.setLayout(new GridLayout(3, 0));
+ 		frame.setLayout(new GridLayout(2, 0));
         frame.getContentPane().add(button , BorderLayout.NORTH);
         frame.getContentPane().add(button2, BorderLayout.CENTER);
-		frame.getContentPane().add(button3, BorderLayout.CENTER);
         frame.setVisible(true);
 	}
 }

@@ -27,7 +27,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	private double easy = 0.1;
 
 	private int dash = 0;
-	private long score_dash = 7000;
+	private int life = 0;
+	private long score_dash = 5000;
 	
 	public GameEngine(GamePanel gp, ImagePanel robotOne) {
 		this.gp = gp;
@@ -74,9 +75,12 @@ public class GameEngine implements KeyListener, GameReporter{
 	private void process(){
 		robotOne.fall(1);
 		
-		if(score > score_dash)
+		if(score > score_dash){
 			dash = 0;
-		
+			if(score > score_dash+1000){
+				life = 0;
+			}
+		}
 		
 		if(dash == 1){
 			generateEnemy();
@@ -86,7 +90,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 		
 		
-		if(Math.random() < easy){
+		if(Math.random()*10 < easy){
 			generateItem();
 		}
 		
@@ -127,7 +131,7 @@ public class GameEngine implements KeyListener, GameReporter{
 
 				
 			if(er.intersects(vr)){
-				if(dash == 0){
+				if(dash == 0 && life == 0){
 					die();
 					gp.dieOver(this);
 				}
@@ -138,9 +142,12 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Item f : items){
 			fr = f.getRectangle();
 			if(fr.intersects(vr)){
-				f.getItem();
-				dash = 1;
-				endDash();
+				if(dash == 0){
+					f.getItem();
+					dash = 1;
+					life = 1;
+					endDash();
+				}
 				return;
 			}
 		}
